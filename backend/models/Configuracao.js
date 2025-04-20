@@ -16,7 +16,8 @@ const ConfiguracaoSchema = new Schema({
     cnpj: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      unique: true  // Evitar duplicação de índice
     },
     inscricao_estadual: {
       type: String,
@@ -29,7 +30,8 @@ const ConfiguracaoSchema = new Schema({
     email: {
       type: String,
       trim: true,
-      lowercase: true
+      lowercase: true,
+      unique: true  // Evitar duplicação de índice
     },
     endereco: {
       rua: { type: String, trim: true },

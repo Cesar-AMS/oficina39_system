@@ -27,13 +27,13 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/oficina39
 app.use('/api/clientes', require('./routes/clienteRoutes'));
 app.use('/api/veiculos', require('./routes/veiculoRoutes'));
 app.use('/api/produtos', require('./routes/produtoRoutes'));
-app.use('/api/fornecedores', require('./routes/fornecedorRoutes'));
-app.use('/api/servicos', require('./routes/servicoRoutes'));
+//app.use('/api/fornecedores', require('./routes/fornecedorRoutes'));
+//app.use('/api/servicos', require('./routes/servicoRoutes'));
 app.use('/api/ordens-servico', require('./routes/ordemServicoRoutes'));
 app.use('/api/notas-fiscais', require('./routes/notaFiscalRoutes'));
 app.use('/api/usuarios', require('./routes/usuarioRoutes'));
-app.use('/api/funcionarios', require('./routes/funcionarioRoutes'));
-app.use('/api/estoque', require('./routes/estoqueRoutes'));
+//app.use('/api/funcionarios', require('./routes/funcionarioRoutes'));
+//app.use('/api/estoque', require('./routes/estoqueRoutes'));
 app.use('/api/financeiro', require('./routes/financeiroRoutes'));
 app.use('/api/agendamentos', require('./routes/agendamentoRoutes'));
 app.use('/api/configuracoes', require('./routes/configuracaoRoutes'));

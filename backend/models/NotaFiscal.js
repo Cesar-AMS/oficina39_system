@@ -5,7 +5,6 @@ const NotaFiscalSchema = new Schema({
   numero: {
     type: String,
     required: true,
-    unique: true,
     trim: true
   },
   serie: {
@@ -64,30 +63,12 @@ const NotaFiscalSchema = new Schema({
     }
   }],
   impostos: {
-    base_calculo_icms: {
-      type: Number,
-      default: 0
-    },
-    valor_icms: {
-      type: Number,
-      default: 0
-    },
-    base_calculo_iss: {
-      type: Number,
-      default: 0
-    },
-    valor_iss: {
-      type: Number,
-      default: 0
-    },
-    pis: {
-      type: Number,
-      default: 0
-    },
-    cofins: {
-      type: Number,
-      default: 0
-    }
+    base_calculo_icms: { type: Number, default: 0 },
+    valor_icms: { type: Number, default: 0 },
+    base_calculo_iss: { type: Number, default: 0 },
+    valor_iss: { type: Number, default: 0 },
+    pis: { type: Number, default: 0 },
+    cofins: { type: Number, default: 0 }
   },
   chave_acesso: {
     type: String,
@@ -98,14 +79,8 @@ const NotaFiscalSchema = new Schema({
     enum: ['Emitida', 'Cancelada'],
     default: 'Emitida'
   },
-  xml: {
-    type: String,
-    trim: true
-  },
-  pdf: {
-    type: String,
-    trim: true
-  },
+  xml: { type: String, trim: true },
+  pdf: { type: String, trim: true },
   data_cadastro: {
     type: Date,
     default: Date.now
@@ -139,23 +114,18 @@ NotaFiscalSchema.methods.cancelar = function(motivo) {
 
 // Método para gerar chave de acesso (simulação)
 NotaFiscalSchema.methods.gerarChaveAcesso = function() {
-  // Simulação de geração de chave de acesso
   const dataAtual = new Date();
   const ano = dataAtual.getFullYear().toString().substr(-2);
   const mes = (dataAtual.getMonth() + 1).toString().padStart(2, '0');
-  const cnpj = '12345678901234'; // Exemplo
+  const cnpj = '12345678901234';
   const modelo = '55';
   const serie = this.serie.padStart(3, '0');
   const numero = this.numero.padStart(9, '0');
   const tipoEmissao = '1';
   const codigoNumerico = Math.floor(Math.random() * 100000000).toString().padStart(8, '0');
-  
-  // Chave sem dígito verificador
   const chave = `${ano}${mes}${cnpj}${modelo}${serie}${numero}${tipoEmissao}${codigoNumerico}`;
-  
-  // Simulação de dígito verificador
   const dv = '0';
-  
+
   this.chave_acesso = `${chave}${dv}`;
   return this.save();
 };

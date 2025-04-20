@@ -35,19 +35,15 @@ const MovimentacaoEstoqueSchema = new Schema({
   },
   data_movimentacao: {
     type: Date,
-    default: Date.now,
+    default: Date.now, // Pode ser deixado como está, mas também pode ser obrigatório, dependendo do caso.
     required: true
   },
   observacoes: {
     type: String,
     trim: true
-  },
-  data_cadastro: {
-    type: Date,
-    default: Date.now
   }
 }, {
-  timestamps: true
+  timestamps: true // Vai adicionar createdAt e updatedAt automaticamente
 });
 
 // Índices para melhorar a performance das consultas
@@ -55,13 +51,15 @@ MovimentacaoEstoqueSchema.index({ produto_id: 1 });
 MovimentacaoEstoqueSchema.index({ tipo: 1 });
 MovimentacaoEstoqueSchema.index({ data_movimentacao: 1 });
 MovimentacaoEstoqueSchema.index({ responsavel_id: 1 });
+// Índice composto se consultas por produto e tipo forem frequentes
+MovimentacaoEstoqueSchema.index({ produto_id: 1, tipo: 1 });
 
 // Método para buscar movimentações por produto
 MovimentacaoEstoqueSchema.statics.buscarPorProduto = function(produtoId) {
   return this.find({ produto_id: produtoId })
     .sort({ data_movimentacao: -1 })
-    .populate('produto_id', 'nome codigo')
-    .populate('responsavel_id', 'nome');
+    .populate('produto_id', 'nome codigo') // Populando com 'nome' e 'codigo' de Produto
+    .populate('responsavel_id', 'nome');  // Populando com 'nome' de Funcionario
 };
 
 // Método para buscar movimentações por período
@@ -73,8 +71,8 @@ MovimentacaoEstoqueSchema.statics.buscarPorPeriodo = function(dataInicio, dataFi
     }
   })
   .sort({ data_movimentacao: -1 })
-  .populate('produto_id', 'nome codigo')
-  .populate('responsavel_id', 'nome');
+  .populate('produto_id', 'nome codigo') // Populando com 'nome' e 'codigo' de Produto
+  .populate('responsavel_id', 'nome');  // Populando com 'nome' de Funcionario
 };
 
 module.exports = mongoose.model('MovimentacaoEstoque', MovimentacaoEstoqueSchema);

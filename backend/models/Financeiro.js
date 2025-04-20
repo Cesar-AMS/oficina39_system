@@ -69,12 +69,8 @@ const FinanceiroSchema = new Schema({
   timestamps: true
 });
 
-// Índices para melhorar a performance das consultas
-FinanceiroSchema.index({ tipo: 1 });
-FinanceiroSchema.index({ categoria: 1 });
-FinanceiroSchema.index({ data_vencimento: 1 });
-FinanceiroSchema.index({ status: 1 });
-FinanceiroSchema.index({ cliente_fornecedor_id: 1 });
+// Índices para melhorar a performance das consultas (sem duplicação)
+FinanceiroSchema.index({ tipo: 1, categoria: 1, data_vencimento: 1, status: 1, cliente_fornecedor_id: 1 });
 
 // Middleware para atualizar o campo ultima_atualizacao
 FinanceiroSchema.pre('save', function(next) {

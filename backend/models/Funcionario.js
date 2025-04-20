@@ -91,7 +91,6 @@ const FuncionarioSchema = new Schema({
 
 // Índices para melhorar a performance das consultas
 FuncionarioSchema.index({ nome: 1 });
-FuncionarioSchema.index({ cpf: 1 }, { unique: true });
 FuncionarioSchema.index({ cargo: 1 });
 FuncionarioSchema.index({ departamento: 1 });
 
@@ -116,7 +115,7 @@ FuncionarioSchema.methods.tempoServico = function() {
   const dataFim = this.data_demissao || new Date();
   const diffTime = Math.abs(dataFim - this.data_admissao);
   const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
-  return Math.floor(diffYears);
+  return Math.round(diffYears * 10) / 10; // Agora retorna um número mais preciso com uma casa decimal
 };
 
 module.exports = mongoose.model('Funcionario', FuncionarioSchema);

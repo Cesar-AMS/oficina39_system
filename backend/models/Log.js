@@ -26,13 +26,9 @@ const LogSchema = new Schema({
     type: String,
     trim: true
   },
-  data_hora: {
-    type: Date,
-    default: Date.now,
-    required: true
-  }
+  // Removido data_hora em favor do campo createdAt gerado automaticamente pelo Mongoose
 }, {
-  timestamps: true
+  timestamps: true // Vai adicionar os campos createdAt e updatedAt automaticamente
 });
 
 // Índices para melhorar a performance das consultas
@@ -40,7 +36,7 @@ LogSchema.index({ usuario_id: 1 });
 LogSchema.index({ acao: 1 });
 LogSchema.index({ entidade: 1 });
 LogSchema.index({ entidade_id: 1 });
-LogSchema.index({ data_hora: 1 });
+LogSchema.index({ createdAt: 1 }); // Utilizando createdAt do Mongoose para datas
 
 // Método para registrar log
 LogSchema.statics.registrar = function(usuarioId, acao, entidade, entidadeId, detalhes, ip) {
@@ -50,27 +46,26 @@ LogSchema.statics.registrar = function(usuarioId, acao, entidade, entidadeId, de
     entidade,
     entidade_id: entidadeId,
     detalhes,
-    ip,
-    data_hora: new Date()
+    ip
   });
 };
 
 // Método para buscar logs por período
 LogSchema.statics.buscarPorPeriodo = function(dataInicio, dataFim) {
   return this.find({
-    data_hora: {
+    createdAt: {
       $gte: dataInicio,
       $lte: dataFim
     }
   })
-  .sort({ data_hora: -1 })
+  .sort({ createdAt: -1 })
   .populate('usuario_id', 'username');
 };
 
 // Método para buscar logs por usuário
 LogSchema.statics.buscarPorUsuario = function(usuarioId) {
   return this.find({ usuario_id: usuarioId })
-    .sort({ data_hora: -1 });
+    .sort({ createdAt: -1 });
 };
 
 module.exports = mongoose.model('Log', LogSchema);

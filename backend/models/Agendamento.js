@@ -52,7 +52,7 @@ const AgendamentoSchema = new Schema({
   timestamps: true
 });
 
-// Índices para melhorar a performance das consultas
+// Definindo índices de forma correta e sem duplicação
 AgendamentoSchema.index({ cliente_id: 1 });
 AgendamentoSchema.index({ veiculo_id: 1 });
 AgendamentoSchema.index({ data_hora: 1 });
@@ -65,19 +65,17 @@ AgendamentoSchema.pre('save', function(next) {
   next();
 });
 
-// Método para confirmar agendamento
+// Métodos de status
 AgendamentoSchema.methods.confirmar = function() {
   this.status = 'Confirmado';
   return this.save();
 };
 
-// Método para cancelar agendamento
 AgendamentoSchema.methods.cancelar = function() {
   this.status = 'Cancelado';
   return this.save();
 };
 
-// Método para concluir agendamento
 AgendamentoSchema.methods.concluir = function() {
   this.status = 'Concluído';
   return this.save();

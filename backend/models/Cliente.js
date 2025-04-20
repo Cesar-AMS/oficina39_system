@@ -10,7 +10,7 @@ const ClienteSchema = new Schema({
   cpf_cnpj: {
     type: String,
     required: true,
-    unique: true,
+    unique: true,  // Este índice já cria o índice único
     trim: true
   },
   tipo: {
@@ -61,9 +61,8 @@ const ClienteSchema = new Schema({
 });
 
 // Índices para melhorar a performance das consultas
-ClienteSchema.index({ nome: 1 });
-ClienteSchema.index({ cpf_cnpj: 1 }, { unique: true });
-ClienteSchema.index({ email: 1 });
+ClienteSchema.index({ nome: 1 });   // Para buscas por nome
+ClienteSchema.index({ email: 1 });  // Para buscas por email
 
 // Middleware para atualizar o campo ultima_atualizacao
 ClienteSchema.pre('save', function(next) {

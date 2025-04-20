@@ -6,13 +6,13 @@ const UsuarioSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    unique: true,  // O índice único é criado automaticamente
     trim: true
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true,  // O índice único é criado automaticamente
     trim: true,
     lowercase: true
   },
@@ -60,9 +60,7 @@ const UsuarioSchema = new Schema({
   timestamps: true
 });
 
-// Índices para melhorar a performance das consultas
-UsuarioSchema.index({ username: 1 }, { unique: true });
-UsuarioSchema.index({ email: 1 }, { unique: true });
+// Índice para funcionario_id (não há índice duplicado para esse campo)
 UsuarioSchema.index({ funcionario_id: 1 });
 
 // Middleware para atualizar o campo ultima_atualizacao
