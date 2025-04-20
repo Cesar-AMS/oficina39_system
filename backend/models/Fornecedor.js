@@ -76,9 +76,8 @@ const FornecedorSchema = new Schema({
   timestamps: true
 });
 
-// Índices para melhorar a performance das consultas
-FornecedorSchema.index({ razao_social: 1 });
-FornecedorSchema.index({ nome_fantasia: 1 });
+// Índice combinado para melhorar a performance das consultas
+FornecedorSchema.index({ razao_social: 1, nome_fantasia: 1 });
 
 // Middleware para atualizar o campo ultima_atualizacao
 FornecedorSchema.pre('save', function(next) {

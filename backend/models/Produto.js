@@ -5,7 +5,6 @@ const ProdutoSchema = new Schema({
   codigo: {
     type: String,
     required: true,
-    unique: true,
     trim: true
   },
   nome: {
@@ -88,26 +87,23 @@ const ProdutoSchema = new Schema({
   timestamps: true
 });
 
-// Índices para melhorar a performance das consultas
-ProdutoSchema.index({ codigo: 1 }, { unique: true });
-ProdutoSchema.index({ nome: 1 });
-ProdutoSchema.index({ categoria: 1 });
-ProdutoSchema.index({ fornecedor_id: 1 });
-ProdutoSchema.index({ codigo_barras: 1 });
+// Índices
+ProdutoSchema.index({ codigo: 1 }, { unique: true }); // Índice único para código
+ProdutoSchema.index({ nome: 1 }); // Índice para nome
+ProdutoSchema.index({ categoria: 1 }); // Índice para categoria
+ProdutoSchema.index({ fornecedor_id: 1 }); // Índice para fornecedor
+ProdutoSchema.index({ codigo_barras: 1 }); // Índice para código de barras
 
-// Middleware para atualizar o campo ultima_atualizacao
+// Middleware
 ProdutoSchema.pre('save', function(next) {
   this.ultima_atualizacao = Date.now();
-  
-  // Calcular margem de lucro se não for fornecida
   if (!this.margem_lucro && this.preco_custo > 0 && this.preco_venda > 0) {
     this.margem_lucro = ((this.preco_venda - this.preco_custo) / this.preco_custo) * 100;
   }
-  
   next();
 });
 
-// Método para buscar produtos por nome ou código
+// Métodos
 ProdutoSchema.statics.buscarPorNomeOuCodigo = function(termo) {
   return this.find({
     $or: [
@@ -118,7 +114,6 @@ ProdutoSchema.statics.buscarPorNomeOuCodigo = function(termo) {
   });
 };
 
-// Método para atualizar estoque
 ProdutoSchema.methods.atualizarEstoque = function(quantidade, tipo) {
   if (tipo === 'entrada') {
     this.estoque_atual += quantidade;
@@ -132,7 +127,6 @@ ProdutoSchema.methods.atualizarEstoque = function(quantidade, tipo) {
   return this.save();
 };
 
-// Método para verificar se o produto está com estoque baixo
 ProdutoSchema.methods.estoqueEstaBaixo = function() {
   return this.estoque_atual <= this.estoque_minimo;
 };

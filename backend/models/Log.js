@@ -26,17 +26,15 @@ const LogSchema = new Schema({
     type: String,
     trim: true
   },
-  // Removido data_hora em favor do campo createdAt gerado automaticamente pelo Mongoose
 }, {
   timestamps: true // Vai adicionar os campos createdAt e updatedAt automaticamente
 });
 
-// Índices para melhorar a performance das consultas
-LogSchema.index({ usuario_id: 1 });
-LogSchema.index({ acao: 1 });
-LogSchema.index({ entidade: 1 });
-LogSchema.index({ entidade_id: 1 });
-LogSchema.index({ createdAt: 1 }); // Utilizando createdAt do Mongoose para datas
+// Índice composto para melhorar a performance das consultas de busca
+LogSchema.index({ usuario_id: 1, createdAt: -1 }); // Índice para buscas por usuário e data
+LogSchema.index({ acao: 1, entidade: 1, entidade_id: 1 }); // Índice composto para ação e entidade
+LogSchema.index({ createdAt: 1 }); // Índice para criação (para facilitar buscas por data)
+
 
 // Método para registrar log
 LogSchema.statics.registrar = function(usuarioId, acao, entidade, entidadeId, detalhes, ip) {

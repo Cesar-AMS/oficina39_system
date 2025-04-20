@@ -5,7 +5,7 @@ const ServicoSchema = new Schema({
   codigo: {
     type: String,
     required: true,
-    unique: true,
+    unique: true,  // O índice único já é definido aqui
     trim: true
   },
   nome: {
@@ -50,9 +50,8 @@ const ServicoSchema = new Schema({
 });
 
 // Índices para melhorar a performance das consultas
-ServicoSchema.index({ codigo: 1 }, { unique: true });
-ServicoSchema.index({ nome: 1 });
-ServicoSchema.index({ categoria: 1 });
+ServicoSchema.index({ nome: 1 });      // Índice para nome
+ServicoSchema.index({ categoria: 1 }); // Índice para categoria
 
 // Middleware para atualizar o campo ultima_atualizacao
 ServicoSchema.pre('save', function(next) {

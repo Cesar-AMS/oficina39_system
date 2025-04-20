@@ -89,10 +89,8 @@ const FuncionarioSchema = new Schema({
   timestamps: true
 });
 
-// Índices para melhorar a performance das consultas
-FuncionarioSchema.index({ nome: 1 });
-FuncionarioSchema.index({ cargo: 1 });
-FuncionarioSchema.index({ departamento: 1 });
+// Índice composto para melhorar a performance das consultas de busca
+FuncionarioSchema.index({ nome: 1, cargo: 1, departamento: 1 });
 
 // Middleware para atualizar o campo ultima_atualizacao
 FuncionarioSchema.pre('save', function(next) {

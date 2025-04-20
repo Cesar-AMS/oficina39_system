@@ -94,11 +94,10 @@ const NotaFiscalSchema = new Schema({
 });
 
 // Índices para melhorar a performance das consultas
-NotaFiscalSchema.index({ numero: 1, serie: 1 }, { unique: true });
-NotaFiscalSchema.index({ ordem_servico_id: 1 });
-NotaFiscalSchema.index({ cliente_id: 1 });
-NotaFiscalSchema.index({ data_emissao: 1 });
-NotaFiscalSchema.index({ chave_acesso: 1 });
+NotaFiscalSchema.index({ numero: 1, serie: 1 }, { unique: true }); // Índice único para numero e serie
+NotaFiscalSchema.index({ ordem_servico_id: 1, cliente_id: 1 }); // Índice composto para ordem_servico_id e cliente_id
+NotaFiscalSchema.index({ data_emissao: 1 }); // Índice para data de emissão
+NotaFiscalSchema.index({ chave_acesso: 1 }); // Índice para chave de acesso
 
 // Middleware para atualizar o campo ultima_atualizacao
 NotaFiscalSchema.pre('save', function(next) {

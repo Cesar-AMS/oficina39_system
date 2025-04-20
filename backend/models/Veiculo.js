@@ -83,7 +83,7 @@ const VeiculoSchema = new Schema({
 // Índices para melhorar a performance das consultas
 VeiculoSchema.index({ cliente_id: 1 });
 VeiculoSchema.index({ placa: 1 }, { unique: true });
-VeiculoSchema.index({ marca: 1, modelo: 1 });
+VeiculoSchema.index({ marca: 1, modelo: 1 });  // Índice composto
 
 // Middleware para atualizar o campo ultima_atualizacao
 VeiculoSchema.pre('save', function(next) {

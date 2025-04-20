@@ -47,12 +47,9 @@ const MovimentacaoEstoqueSchema = new Schema({
 });
 
 // Índices para melhorar a performance das consultas
-MovimentacaoEstoqueSchema.index({ produto_id: 1 });
-MovimentacaoEstoqueSchema.index({ tipo: 1 });
-MovimentacaoEstoqueSchema.index({ data_movimentacao: 1 });
-MovimentacaoEstoqueSchema.index({ responsavel_id: 1 });
-// Índice composto se consultas por produto e tipo forem frequentes
-MovimentacaoEstoqueSchema.index({ produto_id: 1, tipo: 1 });
+MovimentacaoEstoqueSchema.index({ produto_id: 1, tipo: 1 }); // Índice composto para produto e tipo
+MovimentacaoEstoqueSchema.index({ data_movimentacao: 1 }); // Índice para data de movimentação
+MovimentacaoEstoqueSchema.index({ responsavel_id: 1 }); // Índice para responsável
 
 // Método para buscar movimentações por produto
 MovimentacaoEstoqueSchema.statics.buscarPorProduto = function(produtoId) {

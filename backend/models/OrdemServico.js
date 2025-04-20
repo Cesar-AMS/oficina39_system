@@ -5,7 +5,7 @@ const OrdemServicoSchema = new Schema({
   numero: {
     type: String,
     required: true,
-    unique: true,
+    unique: true, // único já cria o índice
     trim: true
   },
   cliente_id: {
@@ -160,7 +160,6 @@ const OrdemServicoSchema = new Schema({
 });
 
 // Índices para melhorar a performance das consultas
-OrdemServicoSchema.index({ numero: 1 }, { unique: true });
 OrdemServicoSchema.index({ cliente_id: 1 });
 OrdemServicoSchema.index({ veiculo_id: 1 });
 OrdemServicoSchema.index({ status: 1 });
