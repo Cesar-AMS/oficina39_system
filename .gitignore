@@ -1,25 +1,29 @@
-# node_modules
+# Node.js
 node_modules/
-
-# Logs
-logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Ambiente
-.env
-.env.*.local
+package-lock.json
+pnpm-lock.yaml
 
 # Build
 dist/
 build/
+.temp/
+.tempfiles/
 
-# Cache
-.cache/
-*.cache/
-.eslintcache
+# Ambiente
+.env
+.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+log/
 
 # Sistema
 .DS_Store
@@ -28,11 +32,27 @@ Thumbs.db
 # IDEs e editores
 .vscode/
 .idea/
+*.sublime-workspace
+*.sublime-project
 
-# Cobertura de testes
+# MongoDB dump/output
+dump/
+
+# Arquivos temporários
+*.swp
+*.tmp
+
+# Testes (caso use cobertura)
 coverage/
 .nyc_output/
 
-# Uploads temporários
-tmp/
-*.tmp
+# Frontend específico (React)
+*.cache/
+.eslintcache
+
+# Backend específico
+backend/uploads/
+backend/tmp/
+
+# Docker (se usar)
+docker-compose.override.yml
